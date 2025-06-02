@@ -6,12 +6,12 @@
     <title>YUUGTRELDYS Apps | Официальный сайт</title>
     <style>
         :root {
-            --primary: #FF0000; /* YouTube red */
-            --secondary: #282828;
-            --accent: #FF0000;
-            --dark: #212121;
-            --light: #FFFFFF;
-            --gray: #AAAAAA;
+            --primary: #4285F4; /* Google Blue */
+            --secondary: #34A853; /* Google Green */
+            --accent: #EA4335; /* Google Red */
+            --dark: #202124;
+            --light: #f8f9fa;
+            --gray: #5f6368;
         }
         
         * {
@@ -22,28 +22,28 @@
         }
         
         body {
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            color: var(--dark);
+            min-height: 100vh;
         }
         
-        .header {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .container {
+        .app-container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         
-        .header-content {
+        .app-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
         
         .logo {
@@ -52,99 +52,111 @@
         }
         
         .logo-icon {
-            font-size: 2rem;
+            font-size: 28px;
             margin-right: 10px;
         }
         
         .logo-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
+            font-size: 22px;
             font-weight: 500;
-            transition: opacity 0.3s;
         }
         
-        .nav a:hover {
-            opacity: 0.8;
+        .app-version {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
         }
         
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 5rem 0;
-            text-align: center;
+        .app-body {
+            padding: 30px;
         }
         
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 12px 30px;
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(66, 133, 244, 0.1);
+            color: var(--primary);
+            padding: 8px 15px;
             border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
         
-        .btn:hover {
-            background: #cc0000;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
-        }
-        
-        .apps-section {
-            padding: 4rem 0;
+        .verification-badge i {
+            margin-right: 8px;
         }
         
         .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2rem;
+            font-size: 28px;
+            margin-bottom: 20px;
             color: var(--dark);
+        }
+        
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+        }
+        
+        .btn-telegram {
+            background: #0088cc;
+        }
+        
+        .btn-telegram:hover {
+            background: #0077b5;
         }
         
         .apps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 25px;
+            margin-top: 40px;
         }
         
         .app-card {
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s;
+            border: 1px solid #e0e0e0;
         }
         
         .app-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
         
         .app-image {
-            height: 200px;
-            background-color: #eee;
+            height: 180px;
+            background-color: #f5f5f5;
             background-size: cover;
             background-position: center;
         }
@@ -154,7 +166,8 @@
         }
         
         .app-title {
-            font-size: 1.3rem;
+            font-size: 18px;
+            font-weight: 500;
             margin-bottom: 10px;
             color: var(--dark);
         }
@@ -162,15 +175,16 @@
         .app-description {
             color: var(--gray);
             margin-bottom: 15px;
-            font-size: 0.9rem;
+            font-size: 14px;
+            line-height: 1.5;
         }
         
         .app-meta {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            font-size: 13px;
             color: var(--gray);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .download-modal {
@@ -180,7 +194,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -198,85 +212,92 @@
         
         .close-modal {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5rem;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
             cursor: pointer;
             color: var(--gray);
         }
         
         .progress-container {
             width: 100%;
-            height: 10px;
-            background: #eee;
-            border-radius: 5px;
-            margin: 20px 0;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 25px 0;
             overflow: hidden;
         }
         
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: var(--primary);
+            background: linear-gradient(90deg, var(--primary), #64b5f6);
+            border-radius: 4px;
             transition: width 0.3s;
         }
         
         .status-text {
-            margin: 10px 0;
-            font-size: 0.9rem;
+            font-size: 14px;
             color: var(--gray);
-        }
-        
-        .features {
-            background: #f1f1f1;
-            padding: 4rem 0;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
             margin-bottom: 20px;
         }
         
-        .feature-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--dark);
+        .security-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 40px 0;
+            border: 1px solid #e0e0e0;
         }
         
-        .feature-text {
+        .security-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .security-title i {
+            color: var(--secondary);
+            margin-right: 10px;
+        }
+        
+        .security-text {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 15px;
+            line-height: 1.6;
         }
         
         .footer {
             background: var(--dark);
             color: white;
-            padding: 3rem 0;
+            padding: 30px;
             text-align: center;
+            margin-top: 50px;
         }
         
         .footer-logo {
-            font-size: 1.8rem;
+            font-size: 20px;
             margin-bottom: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .footer-text {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .social-links {
@@ -285,7 +306,7 @@
         
         .social-links a {
             color: white;
-            font-size: 1.5rem;
+            font-size: 24px;
             margin: 0 10px;
             transition: color 0.3s;
         }
@@ -296,185 +317,130 @@
         
         .copyright {
             color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .verification-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(0,255,0,0.1);
-            color: #00aa00;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-        }
-        
-        .verification-badge i {
-            margin-right: 5px;
-        }
-        
-        .security-info {
-            background: rgba(0,123,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 30px 0;
-            text-align: center;
-            color: #0066cc;
+            font-size: 13px;
+            margin-top: 20px;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <div class="logo-icon"><i class="fab fa-youtube"></i></div>
-                    <div class="logo-text">YUUGTRELDYS Apps</div>
-                </div>
-                <nav class="nav">
-                    <a href="#apps">Приложения</a>
-                    <a href="#features">Преимущества</a>
-                    <a href="#about">О нас</a>
-                </nav>
+    <div class="app-container">
+        <div class="app-header">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-rocket"></i></div>
+                <div class="logo-text">YUUGTRELDYS Apps</div>
             </div>
+            <div class="app-version">v2.1.5 PRO</div>
         </div>
-    </header>
-    
-    <section class="hero">
-        <div class="container">
+        
+        <div class="app-body">
             <div class="verification-badge">
-                <i class="fas fa-check-circle"></i> Официальный сайт
+                <i class="fas fa-check-circle"></i> Официальный сайт приложений
             </div>
-            <h1>Безопасные приложения от YUUGTRELDYS</h1>
-            <p>Все приложения проверены на отсутствие вирусов и вредоносного кода. Скачивайте с уверенностью!</p>
-            <a href="#apps" class="btn">Смотреть приложения</a>
-        </div>
-    </section>
-    
-    <div class="security-info">
-        <div class="container">
-            <i class="fas fa-shield-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
-            <h3>100% безопасность</h3>
-            <p>Все приложения проходят тщательную проверку перед публикацией. Мы гарантируем отсутствие вирусов, троянов и другого вредоносного кода.</p>
-        </div>
-    </div>
-    
-    <section id="apps" class="apps-section">
-        <div class="container">
+            
+            <h1 class="section-title">Безопасные приложения от YUUGTRELDYS</h1>
+            <p class="section-subtitle">
+                Все приложения проверены на отсутствие вирусов и вредоносного кода. 
+                Скачивайте с уверенностью и получайте лучший пользовательский опыт.
+            </p>
+            
+            <a href="https://t.me/yuugtreldys" target="_blank" class="btn btn-telegram">
+                <i class="fab fa-telegram"></i> Наш Telegram
+            </a>
+            
+            <div class="security-card">
+                <h3 class="security-title">
+                    <i class="fas fa-shield-alt"></i> Гарантия безопасности
+                </h3>
+                <p class="security-text">
+                    Каждое приложение перед публикацией проходит тщательную проверку на вирусы и вредоносный код. 
+                    Мы гарантируем 100% безопасность всех наших продуктов для вашего устройства.
+                </p>
+            </div>
+            
             <h2 class="section-title">Наши приложения</h2>
+            <p class="section-subtitle">
+                Выберите нужное приложение из списка ниже. Все они бесплатны и безопасны для использования.
+            </p>
+            
             <div class="apps-grid">
                 <div class="app-card">
-                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400');"></div>
+                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400?text=Super+Tool+PRO');"></div>
                     <div class="app-content">
                         <h3 class="app-title">Super Tool PRO</h3>
-                        <p class="app-description">Мощный инструмент для оптимизации вашего компьютера и повышения производительности.</p>
+                        <p class="app-description">
+                            Мощный инструмент для оптимизации вашего компьютера, очистки системы 
+                            и повышения производительности.
+                        </p>
                         <div class="app-meta">
                             <span>Версия: 2.5.1</span>
                             <span>Размер: 45 MB</span>
                         </div>
-                        <button class="btn download-btn" data-app="Super Tool PRO">Скачать</button>
+                        <button class="btn download-btn" data-app="Super Tool PRO">
+                            <i class="fas fa-download"></i> Скачать
+                        </button>
                     </div>
                 </div>
                 
                 <div class="app-card">
-                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400');"></div>
+                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400?text=Audio+Master');"></div>
                     <div class="app-content">
                         <h3 class="app-title">Audio Master</h3>
-                        <p class="app-description">Профессиональное приложение для обработки звука с множеством эффектов.</p>
+                        <p class="app-description">
+                            Профессиональное приложение для обработки звука с множеством 
+                            эффектов и возможностей настройки.
+                        </p>
                         <div class="app-meta">
                             <span>Версия: 1.8.3</span>
                             <span>Размер: 32 MB</span>
                         </div>
-                        <button class="btn download-btn" data-app="Audio Master">Скачать</button>
+                        <button class="btn download-btn" data-app="Audio Master">
+                            <i class="fas fa-download"></i> Скачать
+                        </button>
                     </div>
                 </div>
                 
                 <div class="app-card">
-                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400');"></div>
+                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400?text=Game+Booster');"></div>
                     <div class="app-content">
                         <h3 class="app-title">Game Booster</h3>
-                        <p class="app-description">Увеличьте FPS в играх и оптимизируйте систему для максимальной производительности.</p>
+                        <p class="app-description">
+                            Увеличьте FPS в играх, оптимизируйте систему и получите 
+                            максимальную производительность в любых играх.
+                        </p>
                         <div class="app-meta">
                             <span>Версия: 3.0.0</span>
                             <span>Размер: 28 MB</span>
                         </div>
-                        <button class="btn download-btn" data-app="Game Booster">Скачать</button>
+                        <button class="btn download-btn" data-app="Game Booster">
+                            <i class="fas fa-download"></i> Скачать
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <section id="features" class="features">
-        <div class="container">
-            <h2 class="section-title">Почему наши приложения?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-virus"></i></div>
-                    <h3 class="feature-title">Без вирусов</h3>
-                    <p class="feature-text">Все приложения проверены антивирусами и не содержат вредоносного кода</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                    <h3 class="feature-title">Высокая скорость</h3>
-                    <p class="feature-text">Оптимизированные приложения работают быстро и не нагружают систему</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                    <h3 class="feature-title">Поддержка</h3>
-                    <p class="feature-text">Мы помогаем пользователям с любыми вопросами по нашим приложениям</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
-                    <h3 class="feature-title">Обновления</h3>
-                    <p class="feature-text">Регулярные обновления с новыми функциями и улучшениями</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="about" class="apps-section" style="padding-bottom: 0;">
-        <div class="container">
-            <h2 class="section-title">О YUUGTRELDYS</h2>
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p>YUUGTRELDYS - популярный ютубер, создающий качественный контент о технологиях, программном обеспечении и лайфхаках для компьютера.</p>
-                <p>Все приложения разрабатываются с заботой о пользователях и проходят тщательное тестирование перед выпуском.</p>
-                
-                <div style="margin: 40px 0;">
-                    <a href="https://youtube.com" target="_blank" class="btn" style="margin-right: 10px;">
-                        <i class="fab fa-youtube"></i> Наш YouTube
-                    </a>
-                    <a href="https://vk.com" target="_blank" class="btn" style="background: #0077ff;">
-                        <i class="fab fa-vk"></i> Группа ВК
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <footer class="footer">
-        <div class="container">
+        
+        <div class="footer">
             <div class="footer-logo">
-                <i class="fab fa-youtube" style="margin-right: 10px;"></i> YUUGTRELDYS Apps
+                <i class="fas fa-rocket"></i> YUUGTRELDYS Apps
             </div>
-            <p>Официальный сайт приложений от YUUGTRELDYS</p>
+            <p class="footer-text">
+                Официальный сайт для загрузки безопасных и проверенных приложений 
+                от YUUGTRELDYS. Все права защищены.
+            </p>
             
             <div class="social-links">
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-vk"></i></a>
-                <a href="#"><i class="fab fa-telegram"></i></a>
-                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="https://t.me/yuugtreldys" target="_blank" title="Telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
             </div>
             
-            <p class="copyright">© 2023 YUUGTRELDYS Apps. Все права защищены.</p>
+            <p class="copyright">
+                © 2023 YUUGTRELDYS Apps. Все приложения защищены авторским правом.
+            </p>
         </div>
-    </footer>
+    </div>
     
     <div class="download-modal" id="downloadModal">
         <div class="modal-content">
@@ -488,8 +454,12 @@
             
             <div class="status-text" id="modalStatus">Подключение к серверу...</div>
             
-            <button class="btn" id="cancelBtn" style="background: #666; display: none;">Отмена</button>
-            <button class="btn" id="openBtn" style="display: none;">Открыть файл</button>
+            <button class="btn" id="cancelBtn" style="background: #666; display: none;">
+                <i class="fas fa-times"></i> Отмена
+            </button>
+            <button class="btn" id="openBtn" style="display: none;">
+                <i class="fas fa-folder-open"></i> Открыть файл
+            </button>
         </div>
     </div>
 
