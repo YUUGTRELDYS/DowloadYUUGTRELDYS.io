@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUUGTRELDYS Apps | Официальный сайт</title>
+    <style>
+        :root {
+            --primary: #FF0000; /* YouTube red */
+            --secondary: #282828;
+            --accent: #FF0000;
+            --dark: #212121;
+            --light: #FFFFFF;
+            --gray: #AAAAAA;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        .nav a:hover {
+            opacity: 0.8;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #cc0000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+        }
+        
+        .apps-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            color: var(--dark);
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .app-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .app-image {
+            height: 200px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .app-content {
+            padding: 20px;
+        }
+        
+        .app-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .app-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .download-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .status-text {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .features {
+            background: #f1f1f1;
+            padding: 4rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .feature-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0,255,0,0.1);
+            color: #00aa00;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .verification-badge i {
+            margin-right: 5px;
+        }
+        
+        .security-info {
+            background: rgba(0,123,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+            color: #0066cc;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fab fa-youtube"></i></div>
+                    <div class="logo-text">YUUGTRELDYS Apps</div>
+                </div>
+                <nav class="nav">
+                    <a href="#apps">Приложения</a>
+                    <a href="#features">Преимущества</a>
+                    <a href="#about">О нас</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="verification-badge">
+                <i class="fas fa-check-circle"></i> Официальный сайт
+            </div>
+            <h1>Безопасные приложения от YUUGTRELDYS</h1>
+            <p>Все приложения проверены на отсутствие вирусов и вредоносного кода. Скачивайте с уверенностью!</p>
+            <a href="#apps" class="btn">Смотреть приложения</a>
+        </div>
+    </section>
+    
+    <div class="security-info">
+        <div class="container">
+            <i class="fas fa-shield-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <h3>100% безопасность</h3>
+            <p>Все приложения проходят тщательную проверку перед публикацией. Мы гарантируем отсутствие вирусов, троянов и другого вредоносного кода.</p>
+        </div>
+    </div>
+    
+    <section id="apps" class="apps-section">
+        <div class="container">
+            <h2 class="section-title">Наши приложения</h2>
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400');"></div>
+                    <div class="app-content">
+                        <h3 class="app-title">Super Tool PRO</h3>
+                        <p class="app-description">Мощный инструмент для оптимизации вашего компьютера и повышения производительности.</p>
+                        <div class="app-meta">
+                            <span>Версия: 2.5.1</span>
+                            <span>Размер: 45 MB</span>
+                        </div>
+                        <button class="btn download-btn" data-app="Super Tool PRO">Скачать</button>
+                    </div>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400');"></div>
+                    <div class="app-content">
+                        <h3 class="app-title">Audio Master</h3>
+                        <p class="app-description">Профессиональное приложение для обработки звука с множеством эффектов.</p>
+                        <div class="app-meta">
+                            <span>Версия: 1.8.3</span>
+                            <span>Размер: 32 MB</span>
+                        </div>
+                        <button class="btn download-btn" data-app="Audio Master">Скачать</button>
+                    </div>
+                </div>
+                
+                <div class="app-card">
+                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400');"></div>
+                    <div class="app-content">
+                        <h3 class="app-title">Game Booster</h3>
+                        <p class="app-description">Увеличьте FPS в играх и оптимизируйте систему для максимальной производительности.</p>
+                        <div class="app-meta">
+                            <span>Версия: 3.0.0</span>
+                            <span>Размер: 28 MB</span>
+                        </div>
+                        <button class="btn download-btn" data-app="Game Booster">Скачать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Почему наши приложения?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-virus"></i></div>
+                    <h3 class="feature-title">Без вирусов</h3>
+                    <p class="feature-text">Все приложения проверены антивирусами и не содержат вредоносного кода</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="feature-title">Высокая скорость</h3>
+                    <p class="feature-text">Оптимизированные приложения работают быстро и не нагружают систему</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3 class="feature-title">Поддержка</h3>
+                    <p class="feature-text">Мы помогаем пользователям с любыми вопросами по нашим приложениям</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h3 class="feature-title">Обновления</h3>
+                    <p class="feature-text">Регулярные обновления с новыми функциями и улучшениями</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="apps-section" style="padding-bottom: 0;">
+        <div class="container">
+            <h2 class="section-title">О YUUGTRELDYS</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p>YUUGTRELDYS - популярный ютубер, создающий качественный контент о технологиях, программном обеспечении и лайфхаках для компьютера.</p>
+                <p>Все приложения разрабатываются с заботой о пользователях и проходят тщательное тестирование перед выпуском.</p>
+                
+                <div style="margin: 40px 0;">
+                    <a href="https://youtube.com" target="_blank" class="btn" style="margin-right: 10px;">
+                        <i class="fab fa-youtube"></i> Наш YouTube
+                    </a>
+                    <a href="https://vk.com" target="_blank" class="btn" style="background: #0077ff;">
+                        <i class="fab fa-vk"></i> Группа ВК
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fab fa-youtube" style="margin-right: 10px;"></i> YUUGTRELDYS Apps
+            </div>
+            <p>Официальный сайт приложений от YUUGTRELDYS</p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+            
+            <p class="copyright">© 2023 YUUGTRELDYS Apps. Все права защищены.</p>
+        </div>
+    </footer>
+    
+    <div class="download-modal" id="downloadModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modalAppTitle">Скачивание приложения</h3>
+            <p>Идет подготовка к загрузке...</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="modalProgressBar"></div>
+            </div>
+            
+            <div class="status-text" id="modalStatus">Подключение к серверу...</div>
+            
+            <button class="btn" id="cancelBtn" style="background: #666; display: none;">Отмена</button>
+            <button class="btn" id="openBtn" style="display: none;">Открыть файл</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadBtns = document.querySelectorAll('.download-btn');
+            const downloadModal = document.getElementById('downloadModal');
+            const closeModal = document.querySelector('.close-modal');
+            const modalAppTitle = document.getElementById('modalAppTitle');
+            const modalProgressBar = document.getElementById('modalProgressBar');
+            const modalStatus = document.getElementById('modalStatus');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const openBtn = document.getElementById('openBtn');
+            
+            // Открытие модального окна загрузки
+            downloadBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const appName = this.getAttribute('data-app');
+                    modalAppTitle.textContent = `Скачивание ${appName}`;
+                    downloadModal.style.display = 'flex';
+                    
+                    // Имитация загрузки
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += Math.random() * 10;
+                        if (progress > 100) progress = 100;
+                        
+                        modalProgressBar.style.width = `${progress}%`;
+                        
+                        if (progress < 20) {
+                            modalStatus.textContent = 'Подключение к серверу...';
+                        } else if (progress < 50) {
+                            modalStatus.textContent = 'Загрузка данных...';
+                        } else if (progress < 80) {
+                            modalStatus.textContent = 'Проверка файла...';
+                            cancelBtn.style.display = 'inline-block';
+                        } else if (progress < 100) {
+                            modalStatus.textContent = 'Завершение...';
+                        } else {
+                            modalStatus.textContent = 'Загрузка завершена!';
+                            clearInterval(interval);
+                            cancelBtn.style.display = 'none';
+                            openBtn.style.display = 'inline-block';
+                        }
+                    }, 300);
+                });
+            });
+            
+            // Закрытие модального окна
+            closeModal.addEventListener('click', function() {
+                downloadModal.style.display = 'none';
+                modalProgressBar.style.width = '0%';
+                modalStatus.textContent = 'Подключение к серверу...';
+                cancelBtn.style.display = 'none';
+                openBtn.style.display = 'none';
+            });
+            
+            // Клик вне модального окна
+            downloadModal.addEventListener('click', function(e) {
+                if (e.target === downloadModal) {
+                    downloadModal.style.display = 'none';
+                    modalProgressBar.style.width = '0%';
+                    modalStatus.textContent = 'Подключение к серверу...';
+                    cancelBtn.style.display = 'none';
+                    openBtn.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
