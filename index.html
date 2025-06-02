@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Zone | Безопасные загрузки от YUUGTRELDYS</title>
+    <title>Download Zone | Безопасные игры от YUUGTRELDYS</title>
     <style>
         :root {
             --primary: #6c5ce7;
@@ -27,36 +27,150 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--light);
             min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-out;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-container {
+            perspective: 1000px;
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .loading-cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 8s infinite linear;
+        }
+
+        .loading-cube div {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .front  { transform: rotateY(0deg) translateZ(100px); }
+        .back   { transform: rotateY(180deg) translateZ(100px); }
+        .right  { transform: rotateY(90deg) translateZ(100px); }
+        .left   { transform: rotateY(-90deg) translateZ(100px); }
+        .top    { transform: rotateX(90deg) translateZ(100px); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        .loading-text {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            text-align: center;
+            background: linear-gradient(to right, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        .progress-container {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #e84393);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.6; transform: scale(0.95); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) rotate(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-1000px) translateX(200px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Main Content Styles (hidden during loading) */
+        .main-content {
+            display: none;
+            min-height: 100vh;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-x: hidden;
+            overflow: auto; /* Добавлено для возможности скролла */
         }
-        
+
         .container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px;
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-            z-index: -1;
+            margin: 20px 0; /* Добавлено для отступов при скролле */
         }
         
         h1 {
@@ -86,85 +200,123 @@
             justify-content: center;
         }
         
-        .official-badge i {
-            margin-right: 8px;
-            color: #00ff00;
-        }
-        
-        .content-grid {
+        .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
             margin: 30px 0;
         }
         
-        .download-card {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .game-card {
             position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.4s ease-out;
+            height: 380px;
         }
         
-        .download-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        .game-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.3) 0%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(255,255,255,0.3) 100%);
+            border-radius: 18px;
+            filter: blur(15px);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: -1;
         }
         
-        .card-image {
-            height: 150px;
-            background-size: cover;
-            background-position: center;
+        .game-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(2deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
         
-        .card-content {
-            padding: 15px;
+        .game-card:hover::before {
+            opacity: 1;
         }
         
-        .card-title {
-            font-weight: bold;
+        .game-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translateZ(20px);
+            transition: transform 0.4s;
+        }
+        
+        .game-card:hover .game-image {
+            transform: translateZ(30px) scale(1.05);
+        }
+        
+        .game-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            transform: translateZ(30px);
+        }
+        
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: 700;
             margin-bottom: 5px;
-            font-size: 1.1rem;
         }
         
-        .card-info {
+        .game-info {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
-            opacity: 0.8;
+            font-size: 0.9rem;
+            opacity: 0.9;
             margin-bottom: 15px;
         }
         
         .safe-badge {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            background: rgba(0, 200, 83, 0.2);
-            color: var(--safe);
-            padding: 5px 10px;
+            background: rgba(0, 200, 83, 0.3);
+            color: var(--light);
+            padding: 5px 12px;
             border-radius: 50px;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             margin-bottom: 10px;
         }
         
         .safe-badge i {
-            margin-right: 5px;
+            margin-right: 6px;
+            color: var(--safe);
         }
         
         .download-btn {
             background: linear-gradient(45deg, var(--accent), #e84393);
             color: white;
             border: none;
-            padding: 8px 15px;
-            font-size: 0.9rem;
+            padding: 10px 20px;
+            font-size: 1rem;
             border-radius: 50px;
             cursor: pointer;
             width: 100%;
             transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .download-btn i {
+            margin-right: 8px;
         }
         
         .download-btn:hover {
             background: linear-gradient(45deg, #e84393, var(--accent));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(253, 121, 168, 0.5);
         }
         
         .social-buttons {
@@ -177,7 +329,7 @@
         .social-btn {
             display: flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 50px;
             color: white;
             text-decoration: none;
@@ -197,7 +349,7 @@
         .youtube-btn:hover {
             background: #cc0000;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
         }
         
         .telegram-btn {
@@ -207,260 +359,189 @@
         .telegram-btn:hover {
             background: #0077b5;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.3);
         }
         
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 100;
-            justify-content: center;
+        .security-notice {
+            background: rgba(0, 200, 83, 0.1);
+            border: 1px solid rgba(0, 200, 83, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            display: flex;
             align-items: center;
+            justify-content: center;
         }
         
-        .modal-content {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .progress-container {
-            width: 100%;
-            height: 10px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 5px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), #e84393);
-            border-radius: 5px;
-            transition: width 0.3s;
-            position: relative;
-        }
-        
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: progressShine 2s infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes progressShine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        .security-notice i {
+            color: var(--safe);
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="official-badge">
-            <i class="fas fa-check-circle"></i> Официальный сайт YUUGTRELDYS
-        </div>
-        
-        <h1>Download Zone</h1>
-        <p class="subtitle">100% безопасные загрузки без вирусов</p>
-        
-        <div class="content-grid">
-            <div class="download-card">
-                <div class="card-image" style="background-image: url('https://via.placeholder.com/400x300?text=Survival+Adventure');"></div>
-                <div class="card-content">
-                    <div class="safe-badge">
-                        <i class="fas fa-shield-alt"></i> Проверено на вирусы
-                    </div>
-                    <div class="card-title">Survival Adventure</div>
-                    <div class="card-info">
-                        <span>1.2 GB</span>
-                        <span>Рейтинг: ★★★★☆</span>
-                    </div>
-                    <button class="download-btn" data-file="Survival Adventure">
-                        <i class="fas fa-download"></i> Скачать
-                    </button>
-                </div>
-            </div>
-            
-            <div class="download-card">
-                <div class="card-image" style="background-image: url('https://via.placeholder.com/400x300?text=Super+Tool+PRO');"></div>
-                <div class="card-content">
-                    <div class="safe-badge">
-                        <i class="fas fa-shield-alt"></i> Проверено на вирусы
-                    </div>
-                    <div class="card-title">Super Tool PRO</div>
-                    <div class="card-info">
-                        <span>45 MB</span>
-                        <span>Версия: 2.5.1</span>
-                    </div>
-                    <button class="download-btn" data-file="Super Tool PRO">
-                        <i class="fas fa-download"></i> Скачать
-                    </button>
-                </div>
-            </div>
-            
-            <div class="download-card">
-                <div class="card-image" style="background-image: url('https://via.placeholder.com/400x300?text=HD+Texture+Pack');"></div>
-                <div class="card-content">
-                    <div class="safe-badge">
-                        <i class="fas fa-shield-alt"></i> Проверено на вирусы
-                    </div>
-                    <div class="card-title">HD Texture Pack</div>
-                    <div class="card-info">
-                        <span>350 MB</span>
-                        <span>Для Minecraft</span>
-                    </div>
-                    <button class="download-btn" data-file="HD Texture Pack">
-                        <i class="fas fa-download"></i> Скачать
-                    </button>
-                </div>
-            </div>
-            
-            <div class="download-card">
-                <div class="card-image" style="background-image: url('https://via.placeholder.com/400x300?text=Photo+Presets');"></div>
-                <div class="card-content">
-                    <div class="safe-badge">
-                        <i class="fas fa-shield-alt"></i> Проверено на вирусы
-                    </div>
-                    <div class="card-title">Photo Presets</div>
-                    <div class="card-info">
-                        <span>120 MB</span>
-                        <span>Для Lightroom</span>
-                    </div>
-                    <button class="download-btn" data-file="Photo Presets">
-                        <i class="fas fa-download"></i> Скачать
-                    </button>
-                </div>
+    <!-- Preloader Section -->
+    <div class="preloader">
+        <div class="particles" id="particles"></div>
+        <div class="loading-container">
+            <div class="loading-cube">
+                <div class="front">YUUG</div>
+                <div class="back">TREL</div>
+                <div class="right">DYS</div>
+                <div class="left">GAME</div>
+                <div class="top">ZONE</div>
+                <div class="bottom">😛</div> <!-- Смайлик с языком вместо 2024 -->
             </div>
         </div>
-        
-        <div class="social-buttons">
-            <a href="https://youtube.com/@yuugtreldys_official?si=ZdXRVEg1UhGaawBk" target="_blank" class="social-btn youtube-btn">
-                <i class="fab fa-youtube"></i> YouTube
-            </a>
-            <a href="https://t.me/yuugtreldys" target="_blank" class="social-btn telegram-btn">
-                <i class="fab fa-telegram"></i> Telegram
-            </a>
+        <div class="loading-text">Загрузка сайта...</div> <!-- Измененный текст -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
         </div>
     </div>
-    
-    <div class="modal" id="downloadModal">
-        <div class="modal-content">
-            <h2 id="modalFileTitle">Загрузка файла</h2>
-            <p id="modalFileInfo"></p>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Main Content (initially hidden) -->
+    <div class="main-content">
+        <div class="container">
+            <div class="official-badge">
+                <i class="fas fa-check-circle"></i> Официальный сайт YUUGTRELDYS
             </div>
             
-            <p id="downloadStatus">Подготовка к загрузке...</p>
+            <h1>Download Zone</h1>
+            <!-- Убрана строка с подзаголовком "Эксклюзивные игры с потрясающей графикой" -->
             
-            <button id="cancelBtn" style="
-                background: transparent;
-                color: white;
-                border: 1px solid white;
-                padding: 8px 20px;
-                border-radius: 50px;
-                cursor: pointer;
-                margin-top: 10px;
-                display: none;
-            ">
-                Отмена
-            </button>
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Survival Adventure" class="game-image">
+                    <div class="game-content">
+                        <div class="safe-badge">
+                            <i class="fas fa-shield-alt"></i> Без вирусов
+                        </div>
+                        <div class="game-title">Survival Adventure</div>
+                        <div class="game-info">
+                            <span>1.2 GB</span>
+                            <span>Рейтинг: ★★★★☆</span>
+                        </div>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i> Скачать
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Space Explorer" class="game-image">
+                    <div class="game-content">
+                        <div class="safe-badge">
+                            <i class="fas fa-shield-alt"></i> Без вирусов
+                        </div>
+                        <div class="game-title">Space Explorer</div>
+                        <div class="game-info">
+                            <span>2.5 GB</span>
+                            <span>Рейтинг: ★★★★★</span>
+                        </div>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i> Скачать
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80" alt="Cyber Racing" class="game-image">
+                    <div class="game-content">
+                        <div class="safe-badge">
+                            <i class="fas fa-shield-alt"></i> Без вирусов
+                        </div>
+                        <div class="game-title">Cyber Racing</div>
+                        <div class="game-info">
+                            <span>3.1 GB</span>
+                            <span>Рейтинг: ★★★★☆</span>
+                        </div>
+                        <button class="download-btn">
+                            <i class="fas fa-download"></i> Скачать
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="security-notice">
+                <i class="fas fa-shield-virus"></i>
+                <span>Все игры проверены на отсутствие вирусов и вредоносного кода. Мы гарантируем 100% безопасность загрузок.</span>
+            </div>
+            
+            <div class="social-buttons">
+                <a href="https://youtube.com/@yuugtreldys_official?si=ZdXRVEg1UhGaawBk" target="_blank" class="social-btn youtube-btn">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+                <a href="https://t.me/yuugtreldys" target="_blank" class="social-btn telegram-btn">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const downloadBtns = document.querySelectorAll('.download-btn');
-            const modal = document.getElementById('downloadModal');
-            const modalTitle = document.getElementById('modalFileTitle');
-            const modalInfo = document.getElementById('modalFileInfo');
-            const progressBar = document.getElementById('progressBar');
-            const downloadStatus = document.getElementById('downloadStatus');
-            const cancelBtn = document.getElementById('cancelBtn');
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
             
-            // Имитация загрузки файла
-            downloadBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const fileName = this.getAttribute('data-file');
-                    const fileSize = this.parentElement.querySelector('.card-info span').textContent;
-                    
-                    modalTitle.textContent = `Загрузка: ${fileName}`;
-                    modalInfo.textContent = `Размер: ${fileSize} | Проверено на вирусы`;
-                    modal.style.display = 'flex';
-                    
-                    let progress = 0;
-                    const interval = setInterval(() => {
-                        progress += Math.random() * 5;
-                        if (progress > 100) progress = 100;
-                        
-                        progressBar.style.width = `${progress}%`;
-                        
-                        if (progress < 30) {
-                            downloadStatus.textContent = 'Подключение к серверу...';
-                        } else if (progress < 60) {
-                            downloadStatus.textContent = 'Загрузка данных...';
-                            cancelBtn.style.display = 'block';
-                        } else if (progress < 90) {
-                            downloadStatus.textContent = 'Проверка на вирусы...';
-                        } else if (progress < 100) {
-                            downloadStatus.textContent = 'Завершение...';
-                        } else {
-                            downloadStatus.textContent = 'Загрузка завершена! Файл безопасен';
-                            clearInterval(interval);
-                            cancelBtn.style.display = 'none';
-                            
-                            // Здесь можно добавить реальную загрузку
-                            // setTimeout(() => {
-                            //     const link = document.createElement('a');
-                            //     link.href = 'path/to/file.exe';
-                            //     link.download = `${fileName}.exe`;
-                            //     document.body.appendChild(link);
-                            //     link.click();
-                            //     document.body.removeChild(link);
-                            // }, 1000);
-                        }
-                    }, 300);
-                    
-                    // Обработчик отмены загрузки
-                    cancelBtn.addEventListener('click', function() {
-                        clearInterval(interval);
-                        modal.style.display = 'none';
-                        progressBar.style.width = '0%';
-                        cancelBtn.style.display = 'none';
-                    });
-                });
-            });
-            
-            // Закрытие модального окна при клике вне его
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    progressBar.style.width = '0%';
-                    cancelBtn.style.display = 'none';
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2px and 6px
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation duration (10s to 20s)
+                const duration = Math.random() * 10 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width += 1;
+                    progressBar.style.width = `${width}%`;
                 }
-            });
+            }, 100); // 100ms * 100 = 10 seconds
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            updateProgressBar();
+            
+            // After 10 seconds, hide preloader and show main content
+            setTimeout(() => {
+                document.querySelector('.preloader').classList.add('hidden');
+                document.querySelector('.main-content').style.display = 'flex';
+                
+                // Remove preloader from DOM after animation completes
+                setTimeout(() => {
+                    document.querySelector('.preloader').remove();
+                }, 1000);
+            }, 10000); // 10 seconds
         });
     </script>
 </body>
