@@ -3,462 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YUUGTRELDYS Apps | Официальный сайт</title>
+    <title>GameZone | Премиум игры от YUUGTRELDYS</title>
     <style>
         :root {
-            --primary: #4285F4; /* Google Blue */
-            --secondary: #34A853; /* Google Green */
-            --accent: #EA4335; /* Google Red */
-            --dark: #202124;
-            --light: #f8f9fa;
-            --gray: #5f6368;
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--light);
             min-height: 100vh;
-        }
-        
-        .app-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        .app-header {
-            background: var(--primary);
-            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            overflow-x: hidden;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-size: 22px;
-            font-weight: 500;
-        }
-        
-        .app-version {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 3px 10px;
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            font-size: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .app-body {
-            padding: 30px;
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
         }
         
-        .verification-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(66, 133, 244, 0.1);
-            color: var(--primary);
-            padding: 8px 15px;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .official-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
             border-radius: 50px;
             font-size: 14px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        
-        .verification-badge i {
-            margin-right: 8px;
-        }
-        
-        .section-title {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .section-subtitle {
-            font-size: 16px;
-            color: var(--gray);
-            margin-bottom: 30px;
-            max-width: 800px;
-        }
-        
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
+            margin: 0 auto 20px;
+            justify-content: center;
         }
         
-        .btn i {
+        .official-badge i {
             margin-right: 8px;
+            color: #00ff00;
         }
         
-        .btn:hover {
-            background: #3367d6;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
-        }
-        
-        .btn-telegram {
-            background: #0088cc;
-        }
-        
-        .btn-telegram:hover {
-            background: #0077b5;
-        }
-        
-        .apps-grid {
+        .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
         
-        .app-card {
-            background: white;
-            border-radius: 10px;
+        .game-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .app-card:hover {
+        .game-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
-        .app-image {
-            height: 180px;
-            background-color: #f5f5f5;
+        .game-image {
+            height: 150px;
             background-size: cover;
             background-position: center;
         }
         
-        .app-content {
-            padding: 20px;
+        .game-content {
+            padding: 15px;
         }
         
-        .app-title {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 10px;
-            color: var(--dark);
+        .game-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
         }
         
-        .app-description {
-            color: var(--gray);
-            margin-bottom: 15px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        .app-meta {
+        .game-info {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
-            color: var(--gray);
-            margin-bottom: 20px;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
         }
         
-        .download-modal {
+        .download-btn {
+            background: linear-gradient(45deg, var(--accent), #e84393);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(45deg, #e84393, var(--accent));
+        }
+        
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
             justify-content: center;
             align-items: center;
         }
         
         .modal-content {
-            background: white;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
             width: 90%;
-            text-align: center;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--gray);
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         .progress-container {
             width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            margin: 25px 0;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin: 20px 0;
             overflow: hidden;
         }
         
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--primary), #64b5f6);
-            border-radius: 4px;
+            background: linear-gradient(90deg, var(--accent), #e84393);
+            border-radius: 5px;
             transition: width 0.3s;
+            position: relative;
         }
         
-        .status-text {
-            font-size: 14px;
-            color: var(--gray);
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressShine 2s infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .telegram-link {
+            display: block;
             text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .security-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            margin: 40px 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .security-title {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-        }
-        
-        .security-title i {
-            color: var(--secondary);
-            margin-right: 10px;
-        }
-        
-        .security-text {
-            color: var(--gray);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
-        .footer {
-            background: var(--dark);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            margin-top: 50px;
-        }
-        
-        .footer-logo {
-            font-size: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .footer-logo i {
-            margin-right: 10px;
-            color: var(--primary);
-        }
-        
-        .footer-text {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .social-links {
-            margin: 20px 0;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 24px;
-            margin: 0 10px;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: var(--primary);
-        }
-        
-        .copyright {
-            color: var(--gray);
-            font-size: 13px;
             margin-top: 20px;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .telegram-link i {
+            margin-right: 5px;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
-        <div class="app-header">
-            <div class="logo">
-                <div class="logo-icon"><i class="fas fa-rocket"></i></div>
-                <div class="logo-text">YUUGTRELDYS Apps</div>
-            </div>
-            <div class="app-version">v2.1.5 PRO</div>
+    <div class="container">
+        <div class="official-badge">
+            <i class="fas fa-check-circle"></i> Официальный сайт YUUGTRELDYS
         </div>
         
-        <div class="app-body">
-            <div class="verification-badge">
-                <i class="fas fa-check-circle"></i> Официальный сайт приложений
+        <h1>GameZone</h1>
+        <p class="subtitle">Премиум игры без вирусов и рекламы</p>
+        
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-image" style="background-image: url('https://via.placeholder.com/400x300?text=Survival+Adventure');"></div>
+                <div class="game-content">
+                    <div class="game-title">Survival Adventure</div>
+                    <div class="game-info">
+                        <span>1.2 GB</span>
+                        <span>Рейтинг: ★★★★☆</span>
+                    </div>
+                    <button class="download-btn" data-game="Survival Adventure">
+                        <i class="fas fa-download"></i> Скачать
+                    </button>
+                </div>
             </div>
             
-            <h1 class="section-title">Безопасные приложения от YUUGTRELDYS</h1>
-            <p class="section-subtitle">
-                Все приложения проверены на отсутствие вирусов и вредоносного кода. 
-                Скачивайте с уверенностью и получайте лучший пользовательский опыт.
-            </p>
-            
-            <a href="https://t.me/yuugtreldys" target="_blank" class="btn btn-telegram">
-                <i class="fab fa-telegram"></i> Наш Telegram
-            </a>
-            
-            <div class="security-card">
-                <h3 class="security-title">
-                    <i class="fas fa-shield-alt"></i> Гарантия безопасности
-                </h3>
-                <p class="security-text">
-                    Каждое приложение перед публикацией проходит тщательную проверку на вирусы и вредоносный код. 
-                    Мы гарантируем 100% безопасность всех наших продуктов для вашего устройства.
-                </p>
+            <div class="game-card">
+                <div class="game-image" style="background-image: url('https://via.placeholder.com/400x300?text=Space+Shooter');"></div>
+                <div class="game-content">
+                    <div class="game-title">Space Shooter</div>
+                    <div class="game-info">
+                        <span>850 MB</span>
+                        <span>Рейтинг: ★★★★★</span>
+                    </div>
+                    <button class="download-btn" data-game="Space Shooter">
+                        <i class="fas fa-download"></i> Скачать
+                    </button>
+                </div>
             </div>
             
-            <h2 class="section-title">Наши приложения</h2>
-            <p class="section-subtitle">
-                Выберите нужное приложение из списка ниже. Все они бесплатны и безопасны для использования.
-            </p>
+            <div class="game-card">
+                <div class="game-image" style="background-image: url('https://via.placeholder.com/400x300?text=Racing+Extreme');"></div>
+                <div class="game-content">
+                    <div class="game-title">Racing Extreme</div>
+                    <div class="game-info">
+                        <span>2.5 GB</span>
+                        <span>Рейтинг: ★★★★☆</span>
+                    </div>
+                    <button class="download-btn" data-game="Racing Extreme">
+                        <i class="fas fa-download"></i> Скачать
+                    </button>
+                </div>
+            </div>
             
-            <div class="apps-grid">
-                <div class="app-card">
-                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400?text=Super+Tool+PRO');"></div>
-                    <div class="app-content">
-                        <h3 class="app-title">Super Tool PRO</h3>
-                        <p class="app-description">
-                            Мощный инструмент для оптимизации вашего компьютера, очистки системы 
-                            и повышения производительности.
-                        </p>
-                        <div class="app-meta">
-                            <span>Версия: 2.5.1</span>
-                            <span>Размер: 45 MB</span>
-                        </div>
-                        <button class="btn download-btn" data-app="Super Tool PRO">
-                            <i class="fas fa-download"></i> Скачать
-                        </button>
+            <div class="game-card">
+                <div class="game-image" style="background-image: url('https://via.placeholder.com/400x300?text=Zombie+Apocalypse');"></div>
+                <div class="game-content">
+                    <div class="game-title">Zombie Apocalypse</div>
+                    <div class="game-info">
+                        <span>3.1 GB</span>
+                        <span>Рейтинг: ★★★★★</span>
                     </div>
-                </div>
-                
-                <div class="app-card">
-                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400?text=Audio+Master');"></div>
-                    <div class="app-content">
-                        <h3 class="app-title">Audio Master</h3>
-                        <p class="app-description">
-                            Профессиональное приложение для обработки звука с множеством 
-                            эффектов и возможностей настройки.
-                        </p>
-                        <div class="app-meta">
-                            <span>Версия: 1.8.3</span>
-                            <span>Размер: 32 MB</span>
-                        </div>
-                        <button class="btn download-btn" data-app="Audio Master">
-                            <i class="fas fa-download"></i> Скачать
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="app-card">
-                    <div class="app-image" style="background-image: url('https://via.placeholder.com/600x400?text=Game+Booster');"></div>
-                    <div class="app-content">
-                        <h3 class="app-title">Game Booster</h3>
-                        <p class="app-description">
-                            Увеличьте FPS в играх, оптимизируйте систему и получите 
-                            максимальную производительность в любых играх.
-                        </p>
-                        <div class="app-meta">
-                            <span>Версия: 3.0.0</span>
-                            <span>Размер: 28 MB</span>
-                        </div>
-                        <button class="btn download-btn" data-app="Game Booster">
-                            <i class="fas fa-download"></i> Скачать
-                        </button>
-                    </div>
+                    <button class="download-btn" data-game="Zombie Apocalypse">
+                        <i class="fas fa-download"></i> Скачать
+                    </button>
                 </div>
             </div>
         </div>
         
-        <div class="footer">
-            <div class="footer-logo">
-                <i class="fas fa-rocket"></i> YUUGTRELDYS Apps
-            </div>
-            <p class="footer-text">
-                Официальный сайт для загрузки безопасных и проверенных приложений 
-                от YUUGTRELDYS. Все права защищены.
-            </p>
-            
-            <div class="social-links">
-                <a href="https://t.me/yuugtreldys" target="_blank" title="Telegram">
-                    <i class="fab fa-telegram"></i>
-                </a>
-            </div>
-            
-            <p class="copyright">
-                © 2023 YUUGTRELDYS Apps. Все приложения защищены авторским правом.
-            </p>
-        </div>
+        <a href="https://t.me/yuugtreldys" target="_blank" class="telegram-link">
+            <i class="fab fa-telegram"></i> Больше игр в нашем Telegram канале
+        </a>
     </div>
     
-    <div class="download-modal" id="downloadModal">
+    <div class="modal" id="downloadModal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3 id="modalAppTitle">Скачивание приложения</h3>
-            <p>Идет подготовка к загрузке...</p>
+            <h2 id="modalGameTitle">Загрузка игры</h2>
+            <p id="modalGameSize"></p>
             
             <div class="progress-container">
-                <div class="progress-bar" id="modalProgressBar"></div>
+                <div class="progress-bar" id="progressBar"></div>
             </div>
             
-            <div class="status-text" id="modalStatus">Подключение к серверу...</div>
+            <p id="downloadStatus">Подготовка к загрузке...</p>
             
-            <button class="btn" id="cancelBtn" style="background: #666; display: none;">
-                <i class="fas fa-times"></i> Отмена
-            </button>
-            <button class="btn" id="openBtn" style="display: none;">
-                <i class="fas fa-folder-open"></i> Открыть файл
+            <button id="cancelBtn" style="
+                background: transparent;
+                color: white;
+                border: 1px solid white;
+                padding: 8px 20px;
+                border-radius: 50px;
+                cursor: pointer;
+                margin-top: 10px;
+                display: none;
+            ">
+                Отмена
             </button>
         </div>
     </div>
@@ -466,65 +326,72 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const downloadBtns = document.querySelectorAll('.download-btn');
-            const downloadModal = document.getElementById('downloadModal');
-            const closeModal = document.querySelector('.close-modal');
-            const modalAppTitle = document.getElementById('modalAppTitle');
-            const modalProgressBar = document.getElementById('modalProgressBar');
-            const modalStatus = document.getElementById('modalStatus');
+            const modal = document.getElementById('downloadModal');
+            const modalTitle = document.getElementById('modalGameTitle');
+            const modalSize = document.getElementById('modalGameSize');
+            const progressBar = document.getElementById('progressBar');
+            const downloadStatus = document.getElementById('downloadStatus');
             const cancelBtn = document.getElementById('cancelBtn');
-            const openBtn = document.getElementById('openBtn');
             
-            // Открытие модального окна загрузки
+            // Имитация загрузки игры
             downloadBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const appName = this.getAttribute('data-app');
-                    modalAppTitle.textContent = `Скачивание ${appName}`;
-                    downloadModal.style.display = 'flex';
+                    const gameName = this.getAttribute('data-game');
+                    const gameSize = this.parentElement.querySelector('.game-info span').textContent;
                     
-                    // Имитация загрузки
+                    modalTitle.textContent = `Загрузка ${gameName}`;
+                    modalSize.textContent = `Размер: ${gameSize}`;
+                    modal.style.display = 'flex';
+                    
                     let progress = 0;
                     const interval = setInterval(() => {
-                        progress += Math.random() * 10;
+                        progress += Math.random() * 5;
                         if (progress > 100) progress = 100;
                         
-                        modalProgressBar.style.width = `${progress}%`;
+                        progressBar.style.width = `${progress}%`;
                         
-                        if (progress < 20) {
-                            modalStatus.textContent = 'Подключение к серверу...';
-                        } else if (progress < 50) {
-                            modalStatus.textContent = 'Загрузка данных...';
-                        } else if (progress < 80) {
-                            modalStatus.textContent = 'Проверка файла...';
-                            cancelBtn.style.display = 'inline-block';
+                        if (progress < 30) {
+                            downloadStatus.textContent = 'Подключение к серверу...';
+                        } else if (progress < 60) {
+                            downloadStatus.textContent = 'Загрузка данных...';
+                            cancelBtn.style.display = 'block';
+                        } else if (progress < 90) {
+                            downloadStatus.textContent = 'Проверка файлов...';
                         } else if (progress < 100) {
-                            modalStatus.textContent = 'Завершение...';
+                            downloadStatus.textContent = 'Завершение...';
                         } else {
-                            modalStatus.textContent = 'Загрузка завершена!';
+                            downloadStatus.textContent = 'Загрузка завершена!';
                             clearInterval(interval);
                             cancelBtn.style.display = 'none';
-                            openBtn.style.display = 'inline-block';
+                            
+                            // Здесь можно добавить реальную загрузку
+                            // setTimeout(() => {
+                            //     const link = document.createElement('a');
+                            //     link.href = 'path/to/game.exe';
+                            //     link.download = `${gameName}.exe`;
+                            //     document.body.appendChild(link);
+                            //     link.click();
+                            //     document.body.removeChild(link);
+                            // }, 1000);
                         }
                     }, 300);
+                    
+                    // Обработчик отмены загрузки
+                    cancelBtn.addEventListener('click', function() {
+                        clearInterval(interval);
+                        modal.style.display = 'none';
+                        progressBar.style.width = '0%';
+                        cancelBtn.style.display = 'none';
+                    });
                 });
             });
             
-            // Закрытие модального окна
-            closeModal.addEventListener('click', function() {
-                downloadModal.style.display = 'none';
-                modalProgressBar.style.width = '0%';
-                modalStatus.textContent = 'Подключение к серверу...';
-                cancelBtn.style.display = 'none';
-                openBtn.style.display = 'none';
-            });
-            
-            // Клик вне модального окна
-            downloadModal.addEventListener('click', function(e) {
-                if (e.target === downloadModal) {
-                    downloadModal.style.display = 'none';
-                    modalProgressBar.style.width = '0%';
-                    modalStatus.textContent = 'Подключение к серверу...';
+            // Закрытие модального окна при клике вне его
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    progressBar.style.width = '0%';
                     cancelBtn.style.display = 'none';
-                    openBtn.style.display = 'none';
                 }
             });
         });
