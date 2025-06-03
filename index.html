@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Zone | Безопасные игры от YUUGTRELDYS</title>
+    <title>YUUGTRELDYS Download Zone</title>
+    <!-- Favicon from your GitHub repo -->
+    <link rel="icon" href="https://raw.githubusercontent.com/[your-username]/[your-repo-name]/main/IMG/Sait.png" type="image/png">
     <style>
         :root {
             --primary: #6c5ce7;
@@ -27,10 +29,23 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--light);
             min-height: 100vh;
-            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
-        /* Preloader Styles */
+        /* Disable right click and selection */
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Enhanced Preloader Styles */
         .preloader {
             position: fixed;
             top: 0;
@@ -44,6 +59,29 @@
             align-items: center;
             z-index: 9999;
             transition: opacity 1s ease-out;
+            overflow: hidden;
+        }
+
+        .preloader::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 0%,
+                rgba(255,255,255,0.1) 50%,
+                transparent 100%
+            );
+            animation: preloaderShine 3s infinite linear;
+            transform: rotate(30deg);
+        }
+
+        @keyframes preloaderShine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
         }
 
         .preloader.hidden {
@@ -80,6 +118,7 @@
             font-weight: bold;
             color: white;
             backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.2);
         }
 
         .front  { transform: rotateY(0deg) translateZ(100px); }
@@ -97,6 +136,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: pulse 2s infinite;
+            position: relative;
+            z-index: 1;
         }
 
         .progress-container {
@@ -106,6 +147,9 @@
             border-radius: 10px;
             margin-top: 30px;
             overflow: hidden;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
 
         .progress-bar {
@@ -114,6 +158,29 @@
             background: linear-gradient(90deg, var(--accent), #e84393);
             border-radius: 10px;
             transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .particles {
@@ -121,7 +188,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: -1;
+            z-index: 0;
         }
 
         .particle {
@@ -129,6 +196,7 @@
             background: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             animation: float linear infinite;
+            box-shadow: 0 0 10px 2px rgba(255,255,255,0.5);
         }
 
         @keyframes rotate {
@@ -143,20 +211,17 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0) translateX(0) rotate(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-1000px) translateX(200px) rotate(720deg); opacity: 0; }
+            0% { transform: translateY(0) translateX(0) rotate(0) scale(0.5); opacity: 0; }
+            10% { opacity: 1; transform: scale(1); }
+            90% { opacity: 1; transform: scale(1); }
+            100% { transform: translateY(-1000px) translateX(200px) rotate(720deg) scale(0.5); opacity: 0; }
         }
 
-        /* Main Content Styles (hidden during loading) */
+        /* Main Content Styles */
         .main-content {
             display: none;
             min-height: 100vh;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
-            overflow: auto; /* Добавлено для возможности скролла */
         }
 
         .container {
@@ -170,34 +235,83 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            margin: 20px 0; /* Добавлено для отступов при скролле */
+            margin: 0 auto 40px;
+            transform-style: preserve-3d;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.3) 0%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(255,255,255,0.3) 100%);
+            border-radius: 25px;
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.6s;
+            z-index: -1;
+        }
+
+        .container:hover::before {
+            opacity: 0.5;
         }
         
-        h1 {
+        h1, h2 {
             font-size: 2.5rem;
             margin-bottom: 10px;
             background: linear-gradient(to right, var(--light), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-align: center;
+            position: relative;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
         
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            text-align: center;
+        h1:hover, h2:hover {
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes shine {
+            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+            50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+            100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-top: 50px;
         }
         
         .official-badge {
             background: rgba(255, 255, 255, 0.2);
-            padding: 8px 20px;
+            padding: 8px 15px;
             border-radius: 50px;
             font-size: 14px;
             display: inline-flex;
             align-items: center;
             margin: 0 auto 20px;
             justify-content: center;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 500px;
+        }
+        
+        .official-badge:hover {
+            background: rgba(0, 200, 83, 0.3);
+            transform: translateY(-3px) rotateX(10deg);
+        }
+        
+        .official-badge i {
+            margin-right: 5px;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .official-badge:hover i {
+            color: var(--safe);
+            transform: scale(1.2);
         }
         
         .games-grid {
@@ -307,16 +421,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transform-style: preserve-3d;
+            perspective: 500px;
         }
         
         .download-btn i {
             margin-right: 8px;
+            transition: transform 0.3s;
         }
         
         .download-btn:hover {
             background: linear-gradient(45deg, #e84393, var(--accent));
-            transform: translateY(-3px);
+            transform: translateY(-3px) rotateX(10deg);
             box-shadow: 0 8px 20px rgba(253, 121, 168, 0.5);
+        }
+        
+        .download-btn:hover i {
+            transform: scale(1.2) translateZ(10px);
         }
         
         .social-buttons {
@@ -335,11 +456,53 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
+            transform-style: preserve-3d;
+            perspective: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 0%,
+                rgba(255,255,255,0.2) 50%,
+                transparent 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+        
+        .social-btn:hover::before {
+            opacity: 1;
+            animation: socialShine 1.5s infinite;
+        }
+        
+        @keyframes socialShine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
         }
         
         .social-btn i {
             margin-right: 8px;
             font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px) rotateX(10deg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-btn:hover i {
+            transform: scale(1.2) translateZ(10px);
         }
         
         .youtube-btn {
@@ -348,8 +511,8 @@
         
         .youtube-btn:hover {
             background: #cc0000;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+            transform: translateY(-3px) rotateX(10deg);
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
         }
         
         .telegram-btn {
@@ -358,8 +521,8 @@
         
         .telegram-btn:hover {
             background: #0077b5;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.3);
+            transform: translateY(-3px) rotateX(10deg);
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.3);
         }
         
         .security-notice {
@@ -373,19 +536,145 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transform-style: preserve-3d;
+            transition: all 0.3s;
+        }
+        
+        .security-notice:hover {
+            transform: translateY(-3px) rotateX(5deg);
+            box-shadow: 0 10px 20px rgba(0, 200, 83, 0.2);
         }
         
         .security-notice i {
             color: var(--safe);
             margin-right: 10px;
             font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        
+        .security-notice:hover i {
+            transform: scale(1.2) translateZ(5px);
+        }
+
+        /* Enhanced Safety Info Section */
+        .safety-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .safety-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            text-align: center;
+            position: relative;
+            transform: translateZ(20px);
+        }
+
+        .safety-title:hover {
+            animation: shine 2s infinite;
+        }
+
+        .safety-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .safety-point {
+            background: rgba(0, 200, 83, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transform-style: preserve-3d;
+            perspective: 500px;
+            transition: all 0.4s ease-out;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .safety-point::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.3) 0%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(255,255,255,0.3) 100%);
+            border-radius: 18px;
+            filter: blur(15px);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: -1;
+        }
+
+        .safety-point:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(2deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .safety-point:hover::before {
+            opacity: 1;
+        }
+
+        .safety-point i {
+            font-size: 2.5rem;
+            color: var(--safe);
+            margin-bottom: 15px;
+            transform: translateZ(20px);
+            transition: transform 0.4s;
+        }
+
+        .safety-point:hover i {
+            transform: translateZ(30px) scale(1.2);
+            animation: iconFloat 2s infinite ease-in-out;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateZ(30px) scale(1.2) translateY(0); }
+            50% { transform: translateZ(30px) scale(1.2) translateY(-5px); }
+        }
+
+        .safety-point h3 {
+            margin-bottom: 10px;
+            color: var(--light);
+            font-size: 1.3rem;
+            transform: translateZ(20px);
+            transition: transform 0.4s;
+        }
+
+        .safety-point:hover h3 {
+            transform: translateZ(30px);
+        }
+
+        .safety-point p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            transform: translateZ(20px);
+            transition: transform 0.4s;
+        }
+
+        .safety-point:hover p {
+            transform: translateZ(30px);
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
-    <!-- Preloader Section -->
+<body oncontextmenu="return false;">
+    <!-- Enhanced Preloader Section -->
     <div class="preloader">
         <div class="particles" id="particles"></div>
         <div class="loading-container">
@@ -395,24 +684,23 @@
                 <div class="right">DYS</div>
                 <div class="left">GAME</div>
                 <div class="top">ZONE</div>
-                <div class="bottom">😛</div> <!-- Смайлик с языком вместо 2024 -->
+                <div class="bottom"><i class="fas fa-check"></i></div>
             </div>
         </div>
-        <div class="loading-text">Загрузка сайта...</div> <!-- Измененный текст -->
+        <div class="loading-text">Загрузка сайта...</div>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
     </div>
 
-    <!-- Main Content (initially hidden) -->
+    <!-- Main Content -->
     <div class="main-content">
         <div class="container">
             <div class="official-badge">
-                <i class="fas fa-check-circle"></i> Официальный сайт YUUGTRELDYS
+                <i class="fas fa-check"></i>
             </div>
             
-            <h1>Download Zone</h1>
-            <!-- Убрана строка с подзаголовком "Эксклюзивные игры с потрясающей графикой" -->
+            <h1>YUUGTRELDYS Download Zone</h1>
             
             <div class="games-grid">
                 <div class="game-card">
@@ -424,7 +712,6 @@
                         <div class="game-title">Survival Adventure</div>
                         <div class="game-info">
                             <span>1.2 GB</span>
-                            <span>Рейтинг: ★★★★☆</span>
                         </div>
                         <button class="download-btn">
                             <i class="fas fa-download"></i> Скачать
@@ -441,7 +728,6 @@
                         <div class="game-title">Space Explorer</div>
                         <div class="game-info">
                             <span>2.5 GB</span>
-                            <span>Рейтинг: ★★★★★</span>
                         </div>
                         <button class="download-btn">
                             <i class="fas fa-download"></i> Скачать
@@ -458,7 +744,6 @@
                         <div class="game-title">Cyber Racing</div>
                         <div class="game-info">
                             <span>3.1 GB</span>
-                            <span>Рейтинг: ★★★★☆</span>
                         </div>
                         <button class="download-btn">
                             <i class="fas fa-download"></i> Скачать
@@ -481,20 +766,61 @@
                 </a>
             </div>
         </div>
+
+        <!-- Enhanced Safety Information Section -->
+        <div class="container">
+            <div class="safety-info">
+                <h2 class="safety-title">Безопасность наших приложений</h2>
+                <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem;">
+                    Мы гарантируем полную безопасность всех приложений, доступных для скачивания на нашем сайте.
+                </p>
+                
+                <div class="safety-points">
+                    <div class="safety-point">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Проверка на вирусы</h3>
+                        <p>Каждое приложение проверяется несколькими антивирусными программами перед публикацией.</p>
+                    </div>
+                    
+                    <div class="safety-point">
+                        <i class="fas fa-lock"></i>
+                        <h3>Защита данных</h3>
+                        <p>Наши приложения не собирают и не передают ваши личные данные третьим лицам.</p>
+                    </div>
+                    
+                    <div class="safety-point">
+                        <i class="fas fa-certificate"></i>
+                        <h3>Официальные источники</h3>
+                        <p>Все файлы загружаются напрямую с наших серверов, исключая риск подмены.</p>
+                    </div>
+                    
+                    <div class="safety-point">
+                        <i class="fas fa-sync-alt"></i>
+                        <h3>Регулярные обновления</h3>
+                        <p>Мы оперативно выпускаем обновления для устранения любых уязвимостей.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Create floating particles
+        // Disable right click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Create enhanced floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
+            const particleCount = 100;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // Random size between 2px and 6px
-                const size = Math.random() * 4 + 2;
+                // Random size between 2px and 8px
+                const size = Math.random() * 6 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
@@ -502,18 +828,27 @@
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 
-                // Random animation duration (10s to 20s)
-                const duration = Math.random() * 10 + 10;
+                // Random animation duration (10s to 30s)
+                const duration = Math.random() * 20 + 10;
                 particle.style.animationDuration = `${duration}s`;
                 
                 // Random delay
-                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                
+                // Random shape (circle or square)
+                if (Math.random() > 0.7) {
+                    particle.style.borderRadius = '0';
+                    particle.style.transform = `rotate(${Math.random() * 360}deg)`;
+                }
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
                 particlesContainer.appendChild(particle);
             }
         }
 
-        // Update progress bar
+        // Update progress bar for 11 seconds
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
             let width = 0;
@@ -521,10 +856,10 @@
                 if (width >= 100) {
                     clearInterval(interval);
                 } else {
-                    width += 1;
+                    width += 0.909; // 100% over 11 seconds (100/11 ≈ 9.09% per second)
                     progressBar.style.width = `${width}%`;
                 }
-            }, 100); // 100ms * 100 = 10 seconds
+            }, 100); // Update every 100ms
         }
 
         // Initialize everything when DOM is loaded
@@ -532,16 +867,17 @@
             createParticles();
             updateProgressBar();
             
-            // After 10 seconds, hide preloader and show main content
+            // After 11 seconds, hide preloader and show main content
             setTimeout(() => {
                 document.querySelector('.preloader').classList.add('hidden');
-                document.querySelector('.main-content').style.display = 'flex';
+                document.querySelector('.main-content').style.display = 'block';
+                document.body.style.overflow = 'auto';
                 
                 // Remove preloader from DOM after animation completes
                 setTimeout(() => {
                     document.querySelector('.preloader').remove();
                 }, 1000);
-            }, 10000); // 10 seconds
+            }, 11000); // 11 seconds
         });
     </script>
 </body>
